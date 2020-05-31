@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "login-5c674": {
+      "hosting": {
+        "login": [
+          "login-5c674"
+        ]
+      }
+    }
+  }
+}
