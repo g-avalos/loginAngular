@@ -2,7 +2,7 @@
   <div class="col-md-6 mx-auto mt-5">
     <div class="card">
       <div class="card-body">
-        <H1 class="text-center">LOGIN</H1>
+        <H2 class="text-center">Login</H2>
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Email" formControlName="email">
@@ -11,9 +11,14 @@
               <input type="password" class="form-control" placeholder="Password" formControlName="password">
           </div>
           <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+          <button class="btn btn-lg btn-danger btn-block" (click)="loginGoogle()">Google</button>
+          <button class="btn btn-lg btn-secundary btn-block" (click)="loginGithub()">Github</button>
         </form>
-        <div class="form-group mt-5">
+        <div class="form-group mt-3">
           <p>No tenes cuenta?<a [routerLink]="['/register']"> Registrate</a></p>
+        </div>
+        <div class="form-group mt-2">
+          <p><a [routerLink]="['/forgot-password']"> Olvidaste tu clave?</a></p>
         </div>
       </div>
     </div>

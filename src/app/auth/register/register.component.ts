@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  providers: [ AuthService ]
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
@@ -20,16 +19,19 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async onRegister() {
+  async onRegister(): Promise<string> {
     const { email, password } = this.registerForm.value;
     try {
       const user = await this.authService.register(email, password);
+      this.authService.userRedirect(user);
 
       if (user) {
-        this.router.navigate(['/home']);
+        this.authService.logout();
       }
-    } catch (error) {
 
+      return email;
+    } catch (error) {
+      console.log(error);
     }
   }
 }
