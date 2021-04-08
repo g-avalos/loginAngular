@@ -13,6 +13,11 @@ import { AuthService } from './auth/services/auth.service';
 import { CanDocenteGuard } from './auth/guards/can-docente.guard';
 import { CanAlumnoGuard } from './auth/guards/can-alumno.guard';
 import { CanAdminGuard } from './auth/guards/can-admin.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule} from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,12 @@ import { CanAdminGuard } from './auth/guards/can-admin.guard';
     AppRoutingModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatButtonModule,
+    FlexLayoutModule,
   ],
   providers: [ AuthService, CanDocenteGuard, CanAdminGuard, CanAlumnoGuard ],
   bootstrap: [AppComponent]

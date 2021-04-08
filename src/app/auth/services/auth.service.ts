@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AuthService extends RoleValidatorService {
   public usuario$: Observable<Usuario>;
+  public userLogged: Usuario;
 
   constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore, private router: Router) {
     super();
@@ -33,26 +34,36 @@ export class AuthService extends RoleValidatorService {
         password
       );
 
-      await this.updateUsuario(result.user);
-
       return result.user;
     } catch (error) {
-      console.log("Error -> ", error);
+      alert(error.message);
     }
   }
 
-  async register(email: string, password: string): Promise<User> {
+  async register(email: string, dni: number, password: string): Promise<User> {
     try {
       const result = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
 
+      const datos: Usuario = {
+        uid: result.user.uid,
+        email: result.user.email,
+        emailVerified: result.user.emailVerified,
+        photoURL: result.user.photoURL,
+        displayName: result.user.displayName,
+        dni: dni,
+        rol: 'ALUMNO'
+      };
+
+      this.updateUsuario(datos);
+
       this.enviarMailVerificacion();
 
       return result.user;
     } catch (error) {
-      console.log("Error -> ", error);
+      alert("Error -> " + error.message);
     }
  }
 
@@ -60,7 +71,7 @@ export class AuthService extends RoleValidatorService {
     try {
       await this.afAuth.signOut();
     } catch (error) {
-      console.log("Error -> ", error);
+      alert("Error -> " + error.message);
     }
   }
 
@@ -100,22 +111,24 @@ export class AuthService extends RoleValidatorService {
     }
   }
 
-  private async updateUsuario(usuario: User) {
-    console.log(usuario.uid);
-
+  private async updateUsuario(usuario: Usuario) {
     const usuarioRef : AngularFirestoreDocument<Usuario> = this.afs.doc<Usuario>(`usuarios/${usuario.uid}`);
-
-    let userRol = (await usuarioRef.ref.get()).data()['rol'];
-
-    if (!userRol) {
-      userRol = 'ALUMNO';
+    let userRol;
+    try {
+      userRol = (await usuarioRef.ref.get()).data()['rol'];
+    } catch (error) {
+      if (!userRol) {
+        userRol = 'ALUMNO';
+      }
     }
+
     const datos: Usuario = {
       uid: usuario.uid,
       email: usuario.email,
-      emailVerificado: usuario.emailVerified,
-      foto: usuario.photoURL,
-      nombre: usuario.displayName,
+      emailVerified: usuario.emailVerified,
+      photoURL: usuario.photoURL,
+      dni: usuario.dni,
+      displayName: usuario.displayName,
       rol: userRol
     };
 

@@ -4,6 +4,7 @@ import { CanDocenteGuard } from './auth/guards/can-docente.guard';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
 import { CanAdminGuard } from './auth/guards/can-admin.guard';
 import { CanAlumnoGuard } from './auth/guards/can-alumno.guard';
+import { CanAuthGuard } from './auth/guards/can-auth.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+    canActivate: [ CanAuthGuard ]
   },
   {
     path: 'login',

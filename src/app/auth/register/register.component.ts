@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
     email: new FormControl(''),
+    dni: new FormControl(''),
     password: new FormControl('')
   });
 
@@ -20,9 +21,9 @@ export class RegisterComponent implements OnInit {
   }
 
   async onRegister(): Promise<string> {
-    const { email, password } = this.registerForm.value;
+    const { email, dni, password } = this.registerForm.value;
     try {
-      const user = await this.authService.register(email, password);
+      const user = await this.authService.register(email, dni, password);
       this.authService.userRedirect(user);
 
       if (user) {
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
       return email;
     } catch (error) {
-      console.log(error);
+      alert(error.message);
     }
   }
 }

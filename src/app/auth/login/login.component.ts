@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { auth, User } from 'firebase/app';
+import { Usuario } from 'src/app/shared/model/usuario.interface';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl('')
   });
+  loading = false;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -21,30 +23,13 @@ export class LoginComponent implements OnInit {
   }
 
   async onLogin() {
+    this.loading = true;
     const { email, password } = this.loginForm.value;
     try {
       const user = await this.authService.login(email, password);
       this.authService.userRedirect(user);
     } catch (error) {
-
-    }
-  }
-
-  async loginGithub() {
-    try {
-      const user = await this.authService.loginWithGithub();
-      this.authService.userRedirect(user);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async loginGoogle() {
-    try {
-      const user = await this.authService.loginWithGoogle();
-      this.authService.userRedirect(user);
-    } catch (error) {
-      console.log(error);
+      alert(error.message)
     }
   }
 }

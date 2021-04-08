@@ -1,1 +1,50 @@
-Hello
+<div class="row">
+  <div class="" *ngIf="_notasDni?.children.length > 0">
+    <H2 class="text-center">{{_notasDni?.DNI}} - {{_notasDni?.children[0].Nombre}}</H2>
+    <div class="col-md-12 mx-auto mt-12">
+      <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let nota of _notasDni.children">
+            <mat-card class="mat-elevation-z4" >
+              <mat-card-header>
+                <mat-card-title><i class="mdi mdi-buffer text-warning">{{nota.Materia}}</i></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                  <h6 class="">Estado: {{nota.Condicion}}</h6>
+                  <h6 class="">Fecha cursada: {{nota.Fecha_Cursada}}</h6>
+                  <h6 class="">Nota cursada: {{nota.Nota_Cursada}}</h6>
+                  <h6 class="" *ngIf="nota.Fecha_Final">Nota final: {{nota.Nota_Final}}</h6>
+                  <h6 class="" *ngIf="nota.Fecha_Final">Fecha final: {{nota.Fecha_Final}}</h6>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" *ngIf="_notas?.length > 0">
+    <div *ngFor="let alumno of _notas">
+      <H2 class="text-center">{{alumno?.DNI}} - {{alumno?.children[0].Nombre}}</H2>
+      <div class="col-md-12 mx-auto mt-12">
+        <div class="content">
+          <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let nota of alumno.children">
+              <mat-card class="mat-elevation-z4" >
+                <mat-card-header>
+                  <mat-card-title><i class="mdi mdi-buffer text-warning">{{nota.Materia}}</i></mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <h6 class="">Estado: {{nota.Condicion}}</h6>
+                    <h6 class="">Fecha cursada: {{nota.Fecha_Cursada}}</h6>
+                    <h6 class="">Nota cursada: {{nota.Nota_Cursada}}</h6>
+                    <h6 class="" *ngIf="nota.Fecha_Final">Nota final: {{nota.Nota_Final}}</h6>
+                    <h6 class="" *ngIf="nota.Fecha_Final">Fecha final: {{nota.Fecha_Final}}</h6>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
